@@ -18,22 +18,24 @@ export default{
     name: 'Input-Section',
     setup(){
         // const weights = ref([])
+        //Initialized an empty array so the inputed weights will be pushed into 
         const weights = shallowRef([])
+        //Initialized weight input to 0.0
         const weightInput = ref(0.0)
-        
+
+     //Adding the inputed weights into an array   
     function addWeight(){ 
-        
-    weights.value.push({
+   weights.value.push({
     weight: weightInput.value, 
     date: new Date().getTime()
-   
-}) 
-console.log(weights.value[0])
-} 
+   }) 
 
+console.log(weights.value)
+} 
+//To print the current weight on the web broweser 
 function currentWeight(){
    
-    weights.value.sort((a,b) => b.date - a.date)[0] || {weight: 0}
+    weights.value.sort((a,b) => b.date - a.date) || {weight: 0}
         }
 
    

@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="current">
-      <h3>{{ currentWeight.weight }}</h3>
+      <h3>{{ submittedInput }}</h3>
       <h4>Current weight (kg)</h4>
       </div>
     <form @submit.prevent="addWeight" class="form">
@@ -17,21 +17,26 @@ import { ref, shallowRef } from 'vue'
 export default{
     name: 'Input-Section',
     setup(){
-        // const weights = ref([])
-        //Initialized an empty array so the inputed weights will be pushed into 
+        
+        //Initialized an empty array so the inputed weights and date will be pushed into 
         const weights = shallowRef([])
-        //Initialized weight input to 0.0
+        //Initialized the inputed weight to 0.0
         const weightInput = ref(0.0)
+        const submittedInput = ref(0.0)
 
-     //Adding the inputed weights into an array   
-    function addWeight(){ 
-   weights.value.push({
-    weight: weightInput.value, 
+        
+        const addWeight = () => {
+            //Add weight to screen
+submittedInput.value = weightInput.value;
+//Add weight and date to an array
+weights.value.push({
+    weight: submittedInput.value, 
     date: new Date().getTime()
    }) 
-
 console.log(weights.value)
-} 
+        }
+
+    
 //To print the current weight on the web broweser 
 function currentWeight(){
    
@@ -42,8 +47,10 @@ function currentWeight(){
         return {
             weights,
             weightInput,
+            submittedInput,
             addWeight,
             currentWeight,
+         
             
         }
     },

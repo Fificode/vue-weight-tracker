@@ -26,7 +26,7 @@ export default{
 
         
         const addWeight = () => {
-            //Add weight to screen
+    //Show weight on screen
 submittedInput.value = weightInput.value;
 //Add weight and date to an array
 weights.value.push({
@@ -37,7 +37,6 @@ console.log(weights.value)
         }
 
     
-//To print the current weight on the web broweser 
 function currentWeight(){
    
     weights.value.sort((a,b) => b.date - a.date) || {weight: 0}

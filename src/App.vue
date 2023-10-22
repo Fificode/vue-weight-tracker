@@ -4,6 +4,7 @@
       <h1>Weight Tracker App</h1>
     </header>
     <InputSection />
+    <RecentWeightsSection />
     <ChartSection />
   </div>
 </template>
@@ -11,12 +12,14 @@
 <script>
 import InputSection from './components/InputSection.vue';
 import ChartSection from './components/ChartSection.vue';
+import RecentWeightsSection from './components/RecentWeightsSection.vue'
 
 export default {
   name: 'App',
   components: {
     InputSection,
     ChartSection,
+    RecentWeightsSection,
   }
 }
 </script>
@@ -36,5 +39,8 @@ body {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.header h1{
+  text-align: center;
 }
 </style>

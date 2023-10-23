@@ -15,12 +15,19 @@
         </form>
 </div>
     </main>
-    
-    <h2>Last 7 days</h2>
+    <div v-if="weights && weights.length > 0">
+           <h2>Last 7 days</h2>
     <ChartSection/>
     <h2>Weight History</h2>
-    <RecentWeightsSection :recentWeights="weights.value"/> 
-  </div>
+    <ul>
+                <li v-for="weight in weights" >
+                  <span>{{ weight.weight }}kg</span>
+                  <!-- <small>{{ new Date(weight.date).toLocaleDateString() }}</small> -->
+                  </li>
+                </ul>
+    <RecentWeightsSection :recentWeights="weights"/> 
+   </div>
+  </div> 
 </template>
 
 <script>
@@ -45,14 +52,14 @@ export default {
         //Initialized the inputed weight to 0.0
         const weightInput = ref(0.0)
         const submittedInput = ref(0.0)
-        let weightsValue = shallowRef([])
+        // let weightsValue = shallowRef([])
 
 const addWeight = () => {
     //Show weight on screen
 submittedInput.value = weightInput.value;
 //  weightsValue = weights.value
 //Add weight and date to an array
- weights.value.push({
+  weights.value.push({
     weight: submittedInput.value, 
     date: new Date().getTime()
    })
@@ -61,11 +68,12 @@ submittedInput.value = weightInput.value;
   //  weights.value.sort((a,b) => b.date - a.date)
   // }
         }
-
+console.log(weights, 'Weights')
+console.log(weights.value, 'Weights Value')
 return {
             weights,
             weightInput,
-            weightsValue,
+            // weightsValue,
             submittedInput,
             addWeight,
            

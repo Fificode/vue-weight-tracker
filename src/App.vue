@@ -25,14 +25,14 @@
                   <small>{{ new Date(weight.date).toLocaleDateString() }}</small>
                   </li>
                 </ul>
-    <RecentWeightsSection :recentWeights="weights"/> 
+    
    </div>
   </div> 
 </template>
 
 <script>
 
-import RecentWeightsSection from './components/RecentWeightsSection.vue';
+
 import ChartSection from './components/ChartSection.vue';
 
 
@@ -41,7 +41,7 @@ export default {
   name: 'App',
   components: {
     
-    RecentWeightsSection,
+   
     ChartSection
    
   },
@@ -51,29 +51,27 @@ export default {
         const weights = shallowRef([])
         //Initialized the inputed weight to 0.0
         const weightInput = ref(0.0)
+        //Initialized the input submitted to 0.0
         const submittedInput = ref(0.0)
-        // let weightsValue = shallowRef([])
-
+       
+ //Show weight on screen
 const addWeight = () => {
-    //Show weight on screen
+  //updated the submitted input to the weight input 
 submittedInput.value = weightInput.value;
-//  weightsValue = weights.value
+
 //Add weight and date to an array
   weights.value.push({
     weight: submittedInput.value, 
     date: new Date().getTime()
    })
-  //  console.log(weights.value)
-  //  if(weights.value.length > 0 ){
-  //  weights.value.sort((a,b) => b.date - a.date)
-  // }
-        }
+  //Sorted the date to most recent on top
+   weights.value.sort((a,b) => b.date - a.date)
+ }
 console.log(weights, 'Weights')
 console.log(weights.value, 'Weights Value')
 return {
             weights,
             weightInput,
-            // weightsValue,
             submittedInput,
             addWeight,
            

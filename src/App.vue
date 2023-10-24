@@ -3,7 +3,7 @@
     <header class='header'>
       <h1>Weight Tracker App</h1>
     </header>
-    <main>
+    <main class="main">
       <div>
     <div class="current">
       <h3>{{ submittedInput }}</h3>
@@ -14,19 +14,20 @@
         <input type="submit" value="Add weight" class="input-submit"/>
         </form>
 </div>
-    </main>
-    <div v-if="weights && weights.length > 0">
-           <h2>Last 7 days</h2>
+<div v-if="weights && weights.length > 0">
+           <h2>Recent Weights</h2>
     <ChartSection/>
     <h2>Weight History</h2>
     <ul>
-                <li v-for="weight in weights" v-bind:key="weight.date">
+                <li v-for="weight in weights" v-bind:key="weight.date" class="weight-list">
                   <span>{{ weight.weight }}kg</span>
                   <small>{{ new Date(weight.date).toLocaleDateString() }}</small>
                   </li>
                 </ul>
     
    </div>
+    </main>
+    
   </div> 
 </template>
 
@@ -67,8 +68,7 @@ submittedInput.value = weightInput.value;
   //Sorted the date to most recent on top
    weights.value.sort((a,b) => b.date - a.date)
  }
-console.log(weights, 'Weights')
-console.log(weights.value, 'Weights Value')
+
 return {
             weights,
             weightInput,
@@ -140,5 +140,35 @@ input{
 .current{
     margin-top: 60px;
     margin-bottom: 30px;
+}
+.main{
+  margin: 0;
+}
+.main ul{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.weight-list{
+  border: 1px solid purple;
+  border-radius: 5px;
+  background-color: #fff;
+  list-style: none;
+  text-align: center;
+  padding: 10px;
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+}
+.weight-list span{
+  font-size: 18px;
+  font-weight: 700;
+}
+.weight-list small{
+  font-size: 15px;
+  font-weight: 600;
 }
 </style>

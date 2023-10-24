@@ -4,16 +4,17 @@
       <h1>Weight Tracker App</h1>
     </header>
     <main class="main">
-      <div>
+      <div class="current-container">
     <div class="current">
       <h3>{{ submittedInput }}</h3>
       <h4>Current weight (kg)</h4>
       </div>
+    </div>
     <form @submit.prevent="addWeight" class="form">
         <input type="number" step="0.1" v-model="weightInput" class="input-number"/><br/>
         <input type="submit" value="Add weight" class="input-submit"/>
         </form>
-</div>
+
 <div v-if="weights && weights.length > 0">
            <h2>Recent Weights</h2>
     <ChartSection/>
@@ -40,12 +41,6 @@ import ChartSection from './components/ChartSection.vue';
 import { ref, shallowRef } from 'vue'
 export default {
   name: 'App',
-  components: {
-    
-   
-    ChartSection
-   
-  },
   setup(){
         
         //Initialized an empty array so the inputed weights and date will be pushed into 
@@ -60,12 +55,12 @@ const addWeight = () => {
   //updated the submitted input to the weight input 
 submittedInput.value = weightInput.value;
 
-//Add weight and date to an array
+//Add weight and date to an empty array
   weights.value.push({
     weight: submittedInput.value, 
     date: new Date().getTime()
    })
-  //Sorted the date to most recent on top
+  //Sorted the date so the most recent date is on top
    weights.value.sort((a,b) => b.date - a.date)
  }
 
@@ -74,17 +69,18 @@ return {
             weightInput,
             submittedInput,
             addWeight,
-           
-         
-            
-        }
+           }
     },
+  }
   
- 
-}
 </script>
 
 <style >
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   background: #fff;
@@ -102,10 +98,16 @@ body {
 }
  h1{
   text-align: center;
+  font-size: 30px;
 }
 h2{
  text-align: center;
   padding-top: 50px;
+  font-size: 20px;
+}
+h3{
+  font-size: 25px;
+  padding: 5px 0;
 }
 .form{
    display: flex;
@@ -114,16 +116,13 @@ h2{
    align-items: center;
 }
 input{
-   
-    
     border: 1px solid #ddd;
-    
-}
+    }
 .input-number{
     border-radius: 2px;
     width: 70%;
-    height: 30px;
-    padding: 5px;
+    height: 40px;
+    padding: 10px 5px;
     outline-color:blueviolet ;
 }
 .input-submit{
@@ -137,14 +136,32 @@ input{
     color: #fff;
 
 }
+.current-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .current{
-    margin-top: 60px;
-    margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+background-color: #fff;
+margin: 30px 0;
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    border: 5px solid blueviolet;
 }
 .main{
   margin: 0;
+  padding: 20px;
 }
 .main ul{
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -157,11 +174,11 @@ input{
   list-style: none;
   text-align: center;
   padding: 10px;
-  width: 40%;
+  width: 60%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 8px 0;
+  margin: 10px 0;
 }
 .weight-list span{
   font-size: 18px;

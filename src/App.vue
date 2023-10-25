@@ -49,7 +49,8 @@ export default {
         const weightInput = ref(0.0)
         //Initialized the input submitted to 0.0
         const submittedInput = ref(0.0)
-        const weightChartEl = ref(null)
+        //Initialized the weight chart element to null
+        const weightChartEl = shallowRef(null)
 
         const weightChart = shallowRef(null)
        
@@ -68,9 +69,9 @@ submittedInput.value = weightInput.value;
  }
 
  watch (weights, newWeights  => {
-  const ws = [...newWeights]
-
-
+  const ws = [newWeights, ...newWeights]
+console.log(weights, 'weights');
+// console.log(ws);
 if(weightChart.value){
     weightChart.value.data.labels = ws
         .sort((a,b) => a.date - b.date)
@@ -79,7 +80,7 @@ if(weightChart.value){
 
     weightChart.value.data.datasets[0].data = ws
         .sort((a,b) => a.date - b.date)
-        .map(w  => w.weight)
+        .map(w  => w.weight) 
         .slice(-7)
 
         weightChart.value.update()
@@ -89,6 +90,8 @@ if(weightChart.value){
         
   }
   nextTick(() => {
+    console.log(weightChartEl, 'Weight chart Element');
+    console.log(weightChartEl.value, 'Weight chart Element Value');
     weightChart.value = new Chart(weightChartEl.value.getContext('2d'),
     {
       type: 'line',
@@ -117,7 +120,7 @@ if(weightChart.value){
   })
   
  }
- )
+ , {immediate: true})
 //  console.log(weightChart, 'weight chart')
 
 
@@ -234,12 +237,12 @@ margin: 30px 0;
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 720px;
-  background-color: #fff;
+  /* background-color: #fff; */
   padding: 20px;
   border-radius: 2px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 .main ul{
   padding: 0;

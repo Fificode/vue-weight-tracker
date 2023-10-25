@@ -17,7 +17,9 @@
 
 <div v-if="weights && weights.length > 0">
            <h2>Recent Weights</h2>
-    <ChartSection/>
+    <div class="chart-section">
+      <canvas ref="weightChartEl"></canvas>
+    </div>
     <h2>Weight History</h2>
     <ul>
                 <li v-for="weight in weights" v-bind:key="weight.date" class="weight-list">
@@ -35,10 +37,8 @@
 <script>
 
 
-import ChartSection from './components/ChartSection.vue';
-
-
-import { ref, shallowRef } from 'vue'
+import { ref, shallowRef, watch, nextTick } from 'vue'
+import Chart from 'chart.js/auto'
 export default {
   name: 'App',
   setup(){
@@ -49,6 +49,9 @@ export default {
         const weightInput = ref(0.0)
         //Initialized the input submitted to 0.0
         const submittedInput = ref(0.0)
+        const weightChartEl = ref(null)
+
+        const weightChart = shallowRef(null)
        
  //Show weight on screen
 const addWeight = () => {
@@ -64,15 +67,71 @@ submittedInput.value = weightInput.value;
    weights.value.sort((a,b) => b.date - a.date)
  }
 
+ watch (weights, newWeights  => {
+  const ws = [...newWeights]
+
+
+if(weightChart.value){
+    weightChart.value.data.labels = ws
+        .sort((a,b) => a.date - b.date)
+        .map(w  => new Date(w.date).toLocaleDateString())
+        .slice(-7)
+
+    weightChart.value.data.datasets[0].data = ws
+        .sort((a,b) => a.date - b.date)
+        .map(w  => w.weight)
+        .slice(-7)
+
+        weightChart.value.update()
+        // console.log(ws, 'ws') 
+
+        return
+        
+  }
+  nextTick(() => {
+    weightChart.value = new Chart(weightChartEl.value.getContext('2d'),
+    {
+      type: 'line',
+      data: {
+        labels: ws
+        .sort((a,b) => a.date - b.date)
+        .map(w  => new Date(w.date).toLocaleDateString()),
+        datasets: [
+          {
+            label: 'Weight',
+            data: ws
+            .sort((a,b)=> a.date - b.date)
+            .map(w => w.weight),
+            backgroundColor: 'rgba(255, 105, 180, 0.2)',
+            borderColor: 'rgb(255, 105, 180)',
+            borderWidth: 1,
+            fill: true
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    })
+  })
+  
+ }
+ )
+//  console.log(weightChart, 'weight chart')
+
+
 return {
             weights,
             weightInput,
             submittedInput,
             addWeight,
+            weightChart,
+            weightChartEl
            }
     },
   }
-  
+
 </script>
 
 <style >
@@ -104,10 +163,12 @@ h2{
  text-align: center;
   padding-top: 50px;
   font-size: 20px;
+  color: #888;
 }
 h3{
   font-size: 25px;
   padding: 5px 0;
+ 
 }
 .form{
    display: flex;
@@ -124,8 +185,12 @@ input{
     height: 40px;
     padding: 10px 5px;
     outline-color:blueviolet ;
+    border: none;
+    appearance: none;
+    font-size: 17px;
 }
 .input-submit{
+  border: none;
     border-radius: 3px;
     height: 35px;
     margin-top: 10px;
@@ -135,6 +200,10 @@ input{
     outline-color:#fff ;
     color: #fff;
 
+}
+.input-submit:hover{
+border-color: purple;
+border-width: 2px;
 }
 .current-container{
   display: flex;
@@ -158,6 +227,19 @@ margin: 30px 0;
 .main{
   margin: 0;
   padding: 20px;
+}
+.chart-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 720px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
 }
 .main ul{
   padding: 0;

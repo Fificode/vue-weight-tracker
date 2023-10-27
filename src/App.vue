@@ -142,10 +142,9 @@ return {
   box-sizing: border-box;
 }
 body {
-  margin: 0;
-  background: #fff;
+ 
   background: radial-gradient(879px at 10.4% 22.3%, rgb(255, 235, 238) 0%, rgb(186, 190, 245) 93.6%);
-  background-attachment: fixed;
+
   min-height: 100vh;
 }
 #app {
@@ -163,6 +162,7 @@ body {
 h2{
  text-align: center;
   padding-top: 50px;
+  padding-bottom: 10px;
   font-size: 20px;
   color: #444;
 }
@@ -239,8 +239,8 @@ margin: 30px 0;
   padding: 20px;
   border-radius: 2px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin: 10px 0;
+ 
 }
 .main ul{
   padding: 0;

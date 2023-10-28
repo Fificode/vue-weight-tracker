@@ -3,15 +3,15 @@
 import { ref, shallowRef, watch, nextTick } from 'vue'
 import Chart from 'chart.js/auto'
 
-   //Initialized an empty array so the inputed weights and date will be pushed into 
+   //Initialised an empty array so the inputed weights and date will be pushed into 
         const weights = ref([])
-        //Initialized the inputed weight to 0.0
+        //Initialised the weight input to 0.0
         const weightInput = ref(0.0)
-        //Initialized the input submitted to 0.0
+        //Initialised the input submitted to 0.0
         const submittedInput = ref(0.0)
-        //Initialized the weight chart element to null
+        //Initialised the weight chart element to null
         const weightChartEl = ref(null)
-//Initialized the weight chart to null
+//Initialised the weight chart to null
         const weightChart = shallowRef(null)
        
  //Called a function to show current weight on screen
@@ -43,9 +43,7 @@ if(weightChart.value){
         .slice(-7)
 
         weightChart.value.update()
-        
-
-        return
+         return
         
   }
   nextTick(() => {
@@ -81,17 +79,15 @@ if(weightChart.value){
  , {deep: true})
 
 
-
-
-  </script>
+</script>
 
 
 <template>
   <div>
-    <header class='header'>
+    <header>
       <h1>Weight Tracker App</h1>
     </header>
-    <main class="main">
+    <main>
       <div class="current-container">
     <div class="current">
       <h3>{{ submittedInput }}</h3>
@@ -105,7 +101,7 @@ if(weightChart.value){
 
 <div v-if="weights && weights.length > 0">
            <h2>Recent Weights</h2>
-    <div  class="chart-section">
+    <div class="chart-section">
       <canvas ref="weightChartEl"></canvas>
     </div>
     <h2>Weight History</h2>
@@ -123,17 +119,15 @@ if(weightChart.value){
 </template>
 
 
-<style >
+<style>
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 body {
- 
-  background: radial-gradient(879px at 10.4% 22.3%, rgb(255, 235, 238) 0%, rgb(186, 190, 245) 93.6%);
-
-  min-height: 100vh;
+background: radial-gradient(879px at 10.4% 22.3%, rgb(255, 235, 238) 0%, rgb(186, 190, 245) 93.6%);
+min-height: 100vh;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -165,10 +159,9 @@ h3{
    justify-content: center; 
    align-items: center;
 }
-input{
-    border: 1px solid #ddd;
-    }
-.input-number{
+
+.input-number{ 
+  border: 1px solid #ddd;
     border-radius: 2px;
     width: 70%;
     height: 40px;
@@ -190,10 +183,7 @@ input{
     color: #fff;
 
 }
-.input-submit:hover{
-border-color: purple;
-border-width: 2px;
-}
+
 .current-container{
   display: flex;
   flex-direction: column;
@@ -206,14 +196,14 @@ border-width: 2px;
   justify-content: center;
   align-items: center;
   text-align: center;
-background-color: #fff;
-margin: 30px 0;
+  background-color: #fff;
+  margin: 30px 0;
     border-radius: 50%;
     width: 180px;
     height: 180px;
     border: 5px solid blueviolet;
 }
-.main{
+main{
   margin: 0;
   padding: 20px;
 }
@@ -230,7 +220,7 @@ margin: 30px 0;
   margin: 10px 0;
  
 }
-.main ul{
+main ul{
   padding: 0;
   margin: 0;
   display: flex;

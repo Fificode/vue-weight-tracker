@@ -1,49 +1,9 @@
-<template>
-  <div>
-    <header class='header'>
-      <h1>Weight Tracker App</h1>
-    </header>
-    <main class="main">
-      <div class="current-container">
-    <div class="current">
-      <h3>{{ submittedInput }}</h3>
-      <h4>Current weight (kg)</h4>
-      </div>
-    </div>
-    <form @submit.prevent="addWeight" class="form">
-        <input type="number" step="0.1" v-model="weightInput" class="input-number"/><br/>
-        <input type="submit" value="Add weight" class="input-submit"/>
-        </form>
-
-<div v-if="weights && weights.length > 0">
-           <h2>Recent Weights</h2>
-    <div  class="chart-section">
-      <canvas ref="weightChartEl"></canvas>
-    </div>
-    <h2>Weight History</h2>
-    <ul>
-                <li v-for="weight in weights" v-bind:key="weight.date" class="weight-list">
-                  <span>{{ weight.weight }}kg</span>
-                  <small>{{ new Date(weight.date).toLocaleDateString() }}</small>
-                  </li>
-                </ul>
-    
-   </div>
-    </main>
-    
-  </div> 
-</template>
-
-<script>
-
+<script setup>
 
 import { ref, shallowRef, watch, nextTick } from 'vue'
 import Chart from 'chart.js/auto'
-export default {
-  name: 'App',
-  setup(){
-        
-        //Initialized an empty array so the inputed weights and date will be pushed into 
+
+   //Initialized an empty array so the inputed weights and date will be pushed into 
         const weights = ref([])
         //Initialized the inputed weight to 0.0
         const weightInput = ref(0.0)
@@ -54,12 +14,12 @@ export default {
 //Initialized the weight chart to null
         const weightChart = shallowRef(null)
        
- //Show weight on screen
+ //Called a function to show current weight on screen
 const addWeight = () => {
-  //updated the submitted input to the weight input 
+  //updated the submitted input value to the weight input value 
 submittedInput.value = weightInput.value;
 
-//Add weight and date to an empty array
+//Added weight and date to an empty array
   weights.value.push({
     weight: submittedInput.value, 
     date: new Date().getTime()
@@ -122,18 +82,46 @@ if(weightChart.value){
 
 
 
-return {
-            weights,
-            weightInput,
-            submittedInput,
-            addWeight,
-            weightChart,
-            weightChartEl
-           }
-    },
-  }
 
-</script>
+  </script>
+
+
+<template>
+  <div>
+    <header class='header'>
+      <h1>Weight Tracker App</h1>
+    </header>
+    <main class="main">
+      <div class="current-container">
+    <div class="current">
+      <h3>{{ submittedInput }}</h3>
+      <h4>Current weight (kg)</h4>
+      </div>
+    </div>
+    <form @submit.prevent="addWeight" class="form">
+        <input type="number" step="0.1" v-model="weightInput" class="input-number"/><br/>
+        <input type="submit" value="Add weight" class="input-submit"/>
+        </form>
+
+<div v-if="weights && weights.length > 0">
+           <h2>Recent Weights</h2>
+    <div  class="chart-section">
+      <canvas ref="weightChartEl"></canvas>
+    </div>
+    <h2>Weight History</h2>
+    <ul>
+                <li v-for="weight in weights" v-bind:key="weight.date" class="weight-list">
+                  <span>{{ weight.weight }}kg</span>
+                  <small>{{ new Date(weight.date).toLocaleDateString() }}</small>
+                  </li>
+                </ul>
+    
+   </div>
+    </main>
+    
+  </div> 
+</template>
+
 
 <style >
 *{
